@@ -1,5 +1,6 @@
 import Botao from './Botao';
 import ThemeContext from "../contexts/ThemeContext";
+import Contagem from './Contagem';
 
 export default (props) => {
     const handleButton = () => {
@@ -13,6 +14,10 @@ export default (props) => {
                 <Botao />
 
                 <button onClick={handleButton}>Trocar para Paulo</button>
+
+                <hr />
+
+                <Contagem/>
             </article>
         )}
         </ThemeContext.Consumer>
