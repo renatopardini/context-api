@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react"
+import { createContext, useContext, useReducer, useEffect } from "react"
 
 // usado para setar as informacoes
 const initialState = {
@@ -16,17 +16,17 @@ const reducer = (state, action) => {
         break;
 
         case 'setName': 
-            let user = { ...state.user }
-            user.name = action.name
+            let newUserName = { ...state.user }
+            newUserName.name = action.name
 
-            return { ...state, user }
+            return { ...state, user: newUserName }
         break;
 
         case 'setEmail':
-            let user = { ...state.user }
-            user.email = action.email
+            let newUserEmail = { ...state.user }
+            newUserEmail.email = action.email
 
-            return { ...state, user } 
+            return { ...state, user: newUserEmail } 
         break;
     }
 
@@ -35,11 +35,21 @@ const reducer = (state, action) => {
 
 export const StateContext = createContext()
 
-export const StateProvider = ({ children }) => (
-    <StateContext.Provider value={useReducer(reducer, initialState)}>
-        {children}
-    </StateContext.Provider>
-)
+const localState = JSON.parse( localStorage.getItem('ctx') )
+
+export const StateProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(reducer, localState || initialState)
+
+    useEffect(() => {
+        localStorage.setItem('ctx', JSON.stringify(state))
+    }, [state])
+
+    return (
+        <StateContext.Provider value={[state, dispatch]}>
+            {children}
+        </StateContext.Provider>
+    )
+}
 
 export const useStateContext = () => useContext(StateContext) 
 

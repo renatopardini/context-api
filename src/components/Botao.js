@@ -5,10 +5,10 @@ import { useStateContext } from "../contexts/StateContext"
 // import ThemeContext from "../contexts/ThemeContext"
 
 export default () => {
-    const context = useStateContext()
+    const [state, dispatch] = useStateContext()
     // const user = useContext(UserContext)
     // const theme = useContext(ThemeContext)
     return (
-        <button>{context.user.name} - {context.theme}</button>
+        <button>{state.user.name} - {state.theme}</button>
     )
 };

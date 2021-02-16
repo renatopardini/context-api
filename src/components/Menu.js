@@ -1,12 +1,11 @@
 import Botao from './Botao';
-import ThemeContext from "../contexts/ThemeContext";
+import { useStateContext } from "../contexts/StateContext";
 
-export default () =>(
-    <ThemeContext.Consumer>
-    {value => (
-        <aside className={`box theme-${value}`}>
+export default () =>{
+    const [state, dispatch] = useStateContext()
+    return (
+        <aside className={`box theme-${state.theme}`}>
             <Botao />
         </aside>
-    )}
-    </ThemeContext.Consumer>
-);
+    )
+};

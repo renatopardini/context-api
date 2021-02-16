@@ -1,25 +1,26 @@
 import Botao from './Botao';
-import ThemeContext from "../contexts/ThemeContext";
+import { useStateContext } from "../contexts/StateContext";
 import Contagem from './Contagem';
 
-export default (props) => {
+export default () => {
+    const [state, dispatch] = useStateContext()
+
     const handleButton = () => {
-        props.setUsername('Paulo');
+        dispatch({
+            type: 'setName',
+            name: 'Paulo'
+        })
     }
 
     return (
-        <ThemeContext.Consumer>
-        {value => (
-            <article className={`box theme-${value}`}>
-                <Botao />
+        <article className={`box theme-${state.theme}`}>
+            <Botao />
 
-                <button onClick={handleButton}>Trocar para Paulo</button>
+            <button onClick={handleButton}>Trocar para Paulo</button>
 
-                <hr />
+            <hr />
 
-                <Contagem/>
-            </article>
-        )}
-        </ThemeContext.Consumer>
+            <Contagem/>
+        </article>
     );
 }
